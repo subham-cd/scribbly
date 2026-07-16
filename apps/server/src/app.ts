@@ -2,6 +2,8 @@ import express from 'express';
 import helmet from 'helmet';
 import cors from 'cors';
 import morgan from 'morgan';
+import healthRoutes from './routes/health.routes';
+import { notFound } from './middlewares/notFound.middleware';    
 
 
 const app = express();
@@ -16,12 +18,10 @@ app.use(express.json());
 
 app.use(express.urlencoded({ extended: true }));
 
-app.get('/', (req, res) => {
- res.status(200).json({
-    success: true,
-    message: "Welcome to Scribbly API 🚀"
-});
-});
+app.use("/api/v1", healthRoutes);
+
+app.use(notFound);
+
 
 
 
